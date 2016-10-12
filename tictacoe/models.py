@@ -70,7 +70,7 @@ class Move(models.Model):
     y = models.IntegerField()
     comment = models.CharField(max_length=300)
     game = models.ForeignKey(Game)
-    by_first_player = models.BooleanField(False)
+    by_first_player = models.BooleanField(default=False)
     timestamp = models.DateTimeField(default=date.today)
 
     class Meta:

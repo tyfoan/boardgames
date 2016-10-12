@@ -27,7 +27,7 @@ Tictactoe game: {{ game.first_player }} vs. {{ game.second_player }}
             {% for line in game.as_board %}
             <tr>
                 {% for square in line %}
-                <td class="tictactoe-cell" style="width: 20px; height: 20px">
+                <td class="tictactoe-cell" style="width: 20px; height: 20px; border: 1px solid #ddd;">
                     {{ square }}
                 </td>
                 {% endfor %}
