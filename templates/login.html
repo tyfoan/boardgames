@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Please login
+{% endblock title %}
+
+
+{% block content %}
+    <div class="well col-sm-6">
+        {% if form.errors %}
+            <p class="text-warning">Your username or password didnt match. Please try again.</p>
+        {% endif %}
+
+        <form action="{% url 'boardgames_login' %}" method="post" role="form" class="form-horizontal" novalidate>
+
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+    </div>
+{% endblock content %}
+

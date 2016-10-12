@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'tictacoe',
+    'user',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -119,3 +122,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+#TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)   #DONT WORK
+
+TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [BASE_DIR+"/templates", ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+
+LOGIN_URL='boardgames_login'
+LOGOUT_URL='boardgames_logout'
+LOGIN_REDIRECT_URL='user_home'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
