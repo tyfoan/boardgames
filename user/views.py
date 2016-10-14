@@ -1,5 +1,8 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from tictacoe.models import Game
 # Create your views here.
@@ -17,3 +20,8 @@ def home(request):
                'finished_games': finished_games,
                'invitations': invitations}
     return render(request, 'user/home.html', context)
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'user/signup.html'
+    success_url = reverse_lazy('user_home')

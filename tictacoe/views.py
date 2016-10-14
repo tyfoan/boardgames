@@ -2,12 +2,15 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
-from tictacoe.models import Invitation, Game
-from tictacoe.forms import InvitationForm
+from django.views.generic import ListView
+from tictacoe.models import Invitation, Game, Move
+from tictacoe.forms import InvitationForm, MoveForm
 
 
 # Create your views here.
+class AllGamesList(ListView):
+     model = Game
+
 
 @login_required
 def new_invitation(request):
@@ -54,6 +57,17 @@ def game_detail(request, pk):
 def game_do_move(request, pk):
     game = get_object_or_404(Game, pk=pk)
     if not game.is_users_move(request.user):
-        #return redirect('tictacoe_game_do_move', pk=pk)
         raise PermissionDenied
-    return render(request, 'tictacoe/game_do_move.html', {'game': game})
+    context = {'game': game}
+    if request.method == "POST":
+        form = MoveForm(data=request.POST, instance=game.create_move())
+        context['form'] = form
+        if form.is_valid():
+            # move.form.save()
+            move = form.save()
+            game.update_after_move(move)
+            game.save()
+            return redirect('tictacoe_game_detail', pk=pk)
+    else:
+        context['form'] = MoveForm()
+    return render(request, 'tictacoe/game_do_move.html', context)

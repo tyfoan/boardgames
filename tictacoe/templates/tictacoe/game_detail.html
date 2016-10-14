@@ -10,11 +10,11 @@ Tictactoe game: {{ game.first_player }} vs. {{ game.second_player }}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
     <style type="text/css">
-        .tictactoe-cell{
+        .tictactoe-cell {
             background-color: #debb27;
         }
-        #last-move{
-            background-color: #DF6E1E;
+        #last-move {
+            background-color:  #DF6E1E;
         }
     </style>
 {% endblock styling %}
@@ -23,12 +23,19 @@ Tictactoe game: {{ game.first_player }} vs. {{ game.second_player }}
     <h3>Game: {{ game }}</h3>
     <div class="col-sm-9">
 
-        <table class="table table-boarded" style="width: 60px; border-width: 2px">
+        <table class="table table-boarded" style="width: 60px;">
             {% for line in game.as_board %}
-            <tr>
+            <tr data-y="{{ forloop.counter0 }}">
                 {% for square in line %}
-                <td class="tictactoe-cell" style="width: 20px; height: 20px; border: 1px solid #ddd;">
-                    {{ square }}
+                <td class="tictactoe-cell {% if not square %}empty{% endif %}" style="width: 20px; height: 20px; border: 1px solid #ddd;" data-x="{{ forloop.counter0 }}"
+                    {% if forloop.parentloop.counter0 == game.last_move.y and forloop.counter0 == game.last_move.x %} id='last-move' {% endif %}>
+                    {% if square == "O" %}
+                        <span class="fa fa-circle-o" style="padding-right: 2px" ></span>
+                            {% elif square == "X" %}
+                        <span class="glyphicon glyphicon-remove" ></span>
+                            {% else %}
+                        <span><img src="{% static 'empty.png' %}"/></span>
+                    {% endif %}
                 </td>
                 {% endfor %}
             </tr>
