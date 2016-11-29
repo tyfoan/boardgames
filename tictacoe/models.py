@@ -128,4 +128,4 @@ class Invitation(models.Model):
                                 help_text="Please select the user you want to play a game with")
     message = models.CharField("Optional message", max_length=300, blank=True,
                                help_text="Adding a friendly message is never a bad idea")
-    timestamp = models.DateTimeField(default=date.today)
+    #timestamp = models.DateTimeField(default=date.today)

@@ -7,6 +7,7 @@ from django.views.generic import CreateView
 from tictacoe.models import Game
 # Create your views here.
 
+
 @login_required
 def home(request):
     my_games = Game.objects.games_for_user(request.user)
@@ -20,6 +21,7 @@ def home(request):
                'finished_games': finished_games,
                'invitations': invitations}
     return render(request, 'user/home.html', context)
+
 
 class SignUpView(CreateView):
     form_class = UserCreationForm
